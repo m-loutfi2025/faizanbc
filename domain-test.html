@@ -111,26 +111,6 @@
             transition: color 0.15s;
         }
         .cookie-preferences-btn:hover { color: #6b7280; }
-        .cookie-gear-icon { 
-            position: fixed; 
-            bottom: 1rem; 
-            right: 1rem; 
-            padding: 0.75rem; 
-            background: white; 
-            box-shadow: 0 10px 15px rgba(0,0,0,0.1); 
-            border-radius: 9999px; 
-            color: #4b5563; 
-            border: 1px solid #f3f4f6; 
-            transition: all 0.3s; 
-            z-index: 1001; 
-            opacity: 0; 
-            pointer-events: none; 
-            width: 48px; 
-            height: 48px;
-            cursor: pointer;
-        }
-        .cookie-gear-icon:hover { background: #f9fafb; transform: scale(1.05); }
-        .cookie-gear-svg { width: 100%; height: 100%; }
         .cookie-banner-wrapper { 
             background: white; 
             box-shadow: 0 -4px 20px rgba(59, 130, 246, 0.2); 
@@ -251,15 +231,6 @@
             </div>
         </div>
     </div>
-    <button id="reopen-preferences" 
-            class="cookie-gear-icon"
-            aria-label="Reopen cookie preferences">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="cookie-gear-svg">
-            <circle cx="12" cy="12" r="3"></circle>
-            <path d="M12 1v6m0 6v6m9-9h-6m-6 0H3"></path>
-            <path d="M20.2 8.8l-4.2 4.2M7.8 7.8l-4.2-4.2m12.6 12.6l-4.2-4.2M7.8 16.2l-4.2 4.2"></path>
-        </svg>
-    </button>
     
     <script>
         // Display current URL info
@@ -291,10 +262,8 @@
         // Cookie Consent Management - Enhanced GDPR/CCPA Compliant System
         const CONSENT_KEY = 'cookieConsent';
         const POPUP_ID = 'cookie-consent-popup';
-        const PREFS_GEAR_ID = 'reopen-preferences';
         const DELAY_MS = 1500;
         const popup = document.getElementById(POPUP_ID);
-        const prefsGear = document.getElementById(PREFS_GEAR_ID);
         
         function setConsent(choice) {
             if (!choice) return;
@@ -307,17 +276,11 @@
                 console.log('❌ Tracking scripts blocked due to rejection/no consent.');
             }
             hidePopup();
-            showGearIcon();
         }
         
         function hidePopup() {
             popup.classList.add('is-dismissing');
             setTimeout(() => { popup.style.display = 'none'; popup.classList.remove('is-visible', 'is-dismissing'); }, 500);
-        }
-        
-        function showGearIcon() {
-            prefsGear.classList.remove('opacity-0', 'pointer-events-none');
-            prefsGear.classList.add('opacity-100', 'pointer-events-auto');
         }
         
         function showPopup() {
@@ -332,7 +295,6 @@
                 console.log(`Existing consent found: ${currentConsent}`);
                 if (currentConsent === 'accepted' && typeof initGoogleAnalytics === 'function') { initGoogleAnalytics(); }
                 popup.style.display = 'none';
-                showGearIcon();
             } else {
                 setTimeout(showPopup, DELAY_MS);
             }
@@ -344,13 +306,6 @@
             document.getElementById('preferences-link')?.addEventListener('click', () => {
                 alert('You can choose "Accept All" or "Reject" to manage your preferences. Detailed options coming soon.');
                 setConsent('preferences_set');
-            });
-            document.getElementById(PREFS_GEAR_ID)?.addEventListener('click', () => {
-                localStorage.removeItem(CONSENT_KEY);
-                console.log('Consent reset. Showing popup again...');
-                prefsGear.classList.remove('opacity-100', 'pointer-events-auto');
-                prefsGear.classList.add('opacity-0', 'pointer-events-none');
-                showPopup();
             });
             checkConsent();
         }
