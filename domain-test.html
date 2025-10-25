@@ -1,14 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-N5EDX94V87"></script>
+    <!-- Google tag (gtag.js) - Loaded only after cookie consent -->
     <script>
+      // Initialize Google Analytics only if consent is given
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-
-      gtag('config', 'G-N5EDX94V87');
+      
+      function initGoogleAnalytics() {
+        const script = document.createElement('script');
+        script.src = 'https://www.googletagmanager.com/gtag/js?id=G-N5EDX94V87';
+        script.async = true;
+        document.head.appendChild(script);
+        
+        script.onload = function() {
+          gtag('js', new Date());
+          gtag('config', 'G-N5EDX94V87');
+        };
+      }
+      
+      // Check if user has already consented
+      if (localStorage.getItem('cookieConsent') === 'accepted') {
+        initGoogleAnalytics();
+      }
     </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -25,6 +39,55 @@
         .back-section { margin-top: 30px; text-align: center; }
         .back-button { background: #007bff; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; }
         .external-link { color: #007bff; }
+        
+        /* Cookie Consent Banner Styles */
+        .cookie-consent-banner {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(135deg, #1E3A8A 0%, #3B82F6 100%);
+            color: white;
+            padding: 1.5rem;
+            box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.3);
+            z-index: 9999;
+            transform: translateY(100%);
+            transition: transform 0.4s ease-in-out;
+        }
+        .cookie-consent-banner.show { transform: translateY(0); }
+        .cookie-consent-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+        .cookie-consent-text { flex: 1; min-width: 250px; }
+        .cookie-consent-buttons { display: flex; gap: 1rem; flex-wrap: wrap; }
+        .cookie-btn {
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            font-size: 0.95rem;
+        }
+        .cookie-btn-accept { background: white; color: #1E3A8A; }
+        .cookie-btn-accept:hover {
+            background: #E0E7FF;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(255, 255, 255, 0.3);
+        }
+        .cookie-btn-decline { background: transparent; color: white; border: 2px solid white; }
+        .cookie-btn-decline:hover { background: rgba(255, 255, 255, 0.1); transform: translateY(-2px); }
+        @media (max-width: 640px) {
+            .cookie-consent-content { flex-direction: column; text-align: center; }
+            .cookie-consent-buttons { width: 100%; justify-content: center; }
+            .cookie-btn { flex: 1; min-width: 120px; }
+        }
     </style>
 </head>
 <body>
@@ -104,6 +167,20 @@
         </div>
     </div>
     
+    <!-- Cookie Consent Banner -->
+    <div id="cookie-consent-banner" class="cookie-consent-banner">
+        <div class="cookie-consent-content">
+            <div class="cookie-consent-text">
+                <h3 class="font-bold text-lg mb-2">🍪 We Value Your Privacy</h3>
+                <p class="text-sm opacity-90">We use cookies to improve your experience and analyze site traffic. By clicking 'Accept', you consent to our use of cookies for analytics.</p>
+            </div>
+            <div class="cookie-consent-buttons">
+                <button id="cookie-accept-btn" class="cookie-btn cookie-btn-accept">Accept</button>
+                <button id="cookie-decline-btn" class="cookie-btn cookie-btn-decline">Decline</button>
+            </div>
+        </div>
+    </div>
+    
     <script>
         // Display current URL info
         document.getElementById('current-url').textContent = window.location.href;
@@ -130,6 +207,27 @@
                 '<div class="status success"><strong>✅ Success:</strong> You are using the correct canonical domain (HTTPS + WWW)!</div>'
             );
         }
+        
+        // Cookie Consent Management
+        const cookieBanner = document.getElementById('cookie-consent-banner');
+        const cookieAcceptBtn = document.getElementById('cookie-accept-btn');
+        const cookieDeclineBtn = document.getElementById('cookie-decline-btn');
+        const cookieConsent = localStorage.getItem('cookieConsent');
+        
+        if (!cookieConsent) {
+            setTimeout(() => { cookieBanner.classList.add('show'); }, 1000);
+        }
+        
+        cookieAcceptBtn?.addEventListener('click', () => {
+            localStorage.setItem('cookieConsent', 'accepted');
+            cookieBanner.classList.remove('show');
+            if (typeof initGoogleAnalytics === 'function') { initGoogleAnalytics(); }
+        });
+        
+        cookieDeclineBtn?.addEventListener('click', () => {
+            localStorage.setItem('cookieConsent', 'declined');
+            cookieBanner.classList.remove('show');
+        });
     </script>
 </body>
 </html>

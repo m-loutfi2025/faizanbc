@@ -1,14 +1,28 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 <head>
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-N5EDX94V87"></script>
+    <!-- Google tag (gtag.js) - Loaded only after cookie consent -->
     <script>
+      // Initialize Google Analytics only if consent is given
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-
-      gtag('config', 'G-N5EDX94V87');
+      
+      function initGoogleAnalytics() {
+        const script = document.createElement('script');
+        script.src = 'https://www.googletagmanager.com/gtag/js?id=G-N5EDX94V87';
+        script.async = true;
+        document.head.appendChild(script);
+        
+        script.onload = function() {
+          gtag('js', new Date());
+          gtag('config', 'G-N5EDX94V87');
+        };
+      }
+      
+      // Check if user has already consented
+      if (localStorage.getItem('cookieConsent') === 'accepted') {
+        initGoogleAnalytics();
+      }
     </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -214,6 +228,103 @@
         .whatsapp-float:hover {
             animation: none;
         }
+
+        /* Cookie Consent Banner Styles */
+        .cookie-consent-banner {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(135deg, #1E3A8A 0%, #3B82F6 100%);
+            color: white;
+            padding: 1.5rem;
+            box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.3);
+            z-index: 9999;
+            transform: translateY(100%);
+            transition: transform 0.4s ease-in-out;
+        }
+
+        .cookie-consent-banner.show {
+            transform: translateY(0);
+        }
+
+        .cookie-consent-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        [dir="rtl"] .cookie-consent-content {
+            flex-direction: row-reverse;
+        }
+
+        .cookie-consent-text {
+            flex: 1;
+            min-width: 250px;
+        }
+
+        .cookie-consent-buttons {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        [dir="rtl"] .cookie-consent-buttons {
+            flex-direction: row-reverse;
+        }
+
+        .cookie-btn {
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            font-size: 0.95rem;
+        }
+
+        .cookie-btn-accept {
+            background: white;
+            color: #1E3A8A;
+        }
+
+        .cookie-btn-accept:hover {
+            background: #E0E7FF;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(255, 255, 255, 0.3);
+        }
+
+        .cookie-btn-decline {
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+
+        .cookie-btn-decline:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+        }
+
+        @media (max-width: 640px) {
+            .cookie-consent-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .cookie-consent-buttons {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .cookie-btn {
+                flex: 1;
+                min-width: 120px;
+            }
+        }
     </style>
     <script>
         tailwind.config = {
@@ -385,6 +496,42 @@
                     });
                 });
             }
+
+            // Cookie Consent Management
+            const cookieBanner = document.getElementById('cookie-consent-banner');
+            const cookieAcceptBtn = document.getElementById('cookie-accept-btn');
+            const cookieDeclineBtn = document.getElementById('cookie-decline-btn');
+
+            // Check if user has already made a choice
+            const cookieConsent = localStorage.getItem('cookieConsent');
+            
+            if (!cookieConsent) {
+                // Show banner after a short delay for better UX
+                setTimeout(() => {
+                    cookieBanner.classList.add('show');
+                }, 1000);
+            }
+
+            // Handle Accept button
+            cookieAcceptBtn?.addEventListener('click', () => {
+                localStorage.setItem('cookieConsent', 'accepted');
+                cookieBanner.classList.remove('show');
+                
+                // Initialize Google Analytics
+                if (typeof initGoogleAnalytics === 'function') {
+                    initGoogleAnalytics();
+                }
+                
+                // Optional: Show a brief confirmation message
+                console.log('Cookies accepted. Analytics enabled.');
+            });
+
+            // Handle Decline button
+            cookieDeclineBtn?.addEventListener('click', () => {
+                localStorage.setItem('cookieConsent', 'declined');
+                cookieBanner.classList.remove('show');
+                console.log('Cookies declined. Analytics disabled.');
+            });
         });
     </script>
 </head>
@@ -905,5 +1052,35 @@
             <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
         </svg>
     </a>
+
+    <!-- Cookie Consent Banner -->
+    <div id="cookie-consent-banner" class="cookie-consent-banner">
+        <div class="cookie-consent-content">
+            <div class="cookie-consent-text">
+                <h3 class="font-bold text-lg mb-2" 
+                    data-en="🍪 We Value Your Privacy" 
+                    data-ar="🍪 نحن نقدر خصوصيتك">
+                    🍪 We Value Your Privacy
+                </h3>
+                <p class="text-sm opacity-90" 
+                   data-en="We use cookies to improve your experience and analyze site traffic. By clicking 'Accept', you consent to our use of cookies for analytics." 
+                   data-ar="نستخدم ملفات تعريف الارتباط لتحسين تجربتك وتحليل حركة المرور على الموقع. بالنقر على 'قبول'، فإنك توافق على استخدامنا لملفات تعريف الارتباط للتحليلات.">
+                    We use cookies to improve your experience and analyze site traffic. By clicking 'Accept', you consent to our use of cookies for analytics.
+                </p>
+            </div>
+            <div class="cookie-consent-buttons">
+                <button id="cookie-accept-btn" class="cookie-btn cookie-btn-accept" 
+                        data-en="Accept" 
+                        data-ar="قبول">
+                    Accept
+                </button>
+                <button id="cookie-decline-btn" class="cookie-btn cookie-btn-decline" 
+                        data-en="Decline" 
+                        data-ar="رفض">
+                    Decline
+                </button>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
