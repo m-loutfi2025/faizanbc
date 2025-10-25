@@ -229,216 +229,61 @@
             animation: none;
         }
 
-        /* Cookie Consent Banner Styles - Full Width Professional Design */
-        .cookie-consent-banner {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            width: 100%;
-            background: #f9fafb;
-            border-top: 1px solid #e5e7eb;
-            box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.1);
-            z-index: 10000;
+        /* Cookie Consent Banner Styles - Enhanced Tailwind-Based Design */
+        .cookie-popup {
+            transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
             opacity: 0;
             transform: translateY(100%);
-            transition: opacity 0.5s ease, transform 0.5s ease;
+            pointer-events: none;
+            z-index: 1000;
+            width: 100%;
+            left: 0;
+            bottom: 0;
+            border-radius: 12px 12px 0 0;
         }
 
-        .cookie-consent-banner.show {
+        .cookie-popup.is-visible {
             opacity: 1;
             transform: translateY(0);
+            pointer-events: all;
         }
-
-        .cookie-consent-banner.hide {
-            opacity: 0;
+        
+        .cookie-popup.is-dismissing {
             transform: translateY(100%);
         }
-
-        .cookie-consent-container {
-            max-width: 1400px;
+        
+        .banner-content-wrapper {
+            max-width: 1280px;
             margin: 0 auto;
-            padding: 1.75rem 2rem;
-        }
-
-        .cookie-consent-content {
-            display: grid;
-            grid-template-columns: 1fr auto;
-            gap: 2rem;
-            align-items: start;
-        }
-
-        .cookie-consent-text {
-            color: #1f2937;
-        }
-
-        .cookie-consent-title {
-            font-family: 'Inter', sans-serif;
-            font-size: 1.25rem;
-            font-weight: 700;
-            color: #1e3a8a;
-            margin-bottom: 0.75rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .cookie-consent-description {
-            font-family: 'Inter', sans-serif;
-            font-size: 0.95rem;
-            line-height: 1.6;
-            color: #4b5563;
-            margin-bottom: 0;
-        }
-
-        .cookie-consent-actions {
             display: flex;
             flex-direction: column;
-            gap: 0.75rem;
-            align-items: flex-end;
+            gap: 1.5rem;
         }
 
-        [dir="rtl"] .cookie-consent-actions {
-            align-items: flex-start;
-        }
-
-        .cookie-consent-buttons {
-            display: flex;
-            gap: 0.75rem;
-            flex-wrap: wrap;
-        }
-
-        [dir="rtl"] .cookie-consent-buttons {
-            flex-direction: row-reverse;
-        }
-
-        .cookie-btn {
-            font-family: 'Inter', sans-serif;
-            padding: 0.75rem 1.75rem;
-            border-radius: 12px;
-            font-weight: 600;
-            font-size: 0.95rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            border: none;
-            white-space: nowrap;
-        }
-
-        .cookie-btn-accept {
-            background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
-            color: white;
-            box-shadow: 0 4px 12px rgba(30, 58, 138, 0.3);
-        }
-
-        .cookie-btn-accept:hover {
-            background: linear-gradient(135deg, #1e40af 0%, #2563eb 100%);
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(30, 58, 138, 0.4);
-        }
-
-        .cookie-btn-reject {
-            background: white;
-            color: #6b7280;
-            border: 2px solid #d1d5db;
-        }
-
-        .cookie-btn-reject:hover {
-            background: #f9fafb;
-            border-color: #9ca3af;
-            color: #4b5563;
-            transform: translateY(-2px);
-        }
-
-        .cookie-manage-link {
-            font-family: 'Inter', sans-serif;
-            font-size: 0.875rem;
-            color: #9ca3af;
-            text-decoration: none;
-            cursor: pointer;
-            transition: color 0.2s ease;
-            border: none;
-            background: none;
-            padding: 0;
-        }
-
-        .cookie-manage-link:hover {
-            color: #3b82f6;
-            text-decoration: underline;
-        }
-
-        /* Cookie Preferences Gear Icon in Footer */
-        .cookie-preferences-trigger {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            width: 50px;
-            height: 50px;
-            background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
-            color: white;
-            border-radius: 50%;
-            display: none;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            box-shadow: 0 4px 12px rgba(30, 58, 138, 0.3);
-            transition: all 0.3s ease;
-            z-index: 9999;
-        }
-
-        [dir="rtl"] .cookie-preferences-trigger {
-            right: auto;
-            left: 20px;
-        }
-
-        .cookie-preferences-trigger.show {
-            display: flex;
-        }
-
-        .cookie-preferences-trigger:hover {
-            transform: scale(1.1) rotate(90deg);
-            box-shadow: 0 6px 20px rgba(30, 58, 138, 0.4);
-        }
-
-        .cookie-preferences-trigger svg {
-            width: 24px;
-            height: 24px;
-        }
-
-        @media (max-width: 768px) {
-            .cookie-consent-container {
-                padding: 1.5rem 1rem;
+        @media (min-width: 1024px) {
+            .banner-content-wrapper {
+                flex-direction: row;
+                align-items: center;
+                justify-content: space-between;
             }
-
-            .cookie-consent-content {
-                grid-template-columns: 1fr;
-                gap: 1.5rem;
+            .banner-text-container {
+                flex-grow: 1;
+                padding-right: 2rem;
             }
-
-            .cookie-consent-title {
-                font-size: 1.125rem;
+            [dir="rtl"] .banner-text-container {
+                padding-right: 0;
+                padding-left: 2rem;
             }
-
-            .cookie-consent-description {
-                font-size: 0.875rem;
+            .banner-button-container {
+                flex-shrink: 0;
+                max-width: 380px;
             }
+        }
 
-            .cookie-consent-actions {
-                align-items: stretch;
-            }
-
-            .cookie-consent-buttons {
-                flex-direction: column;
-                width: 100%;
-            }
-
-            .cookie-btn {
-                width: 100%;
-                text-align: center;
-            }
-
-            .cookie-manage-link {
-                text-align: center;
-            }
+        /* Gear Icon Size */
+        .gear-icon-size {
+            width: 48px;
+            height: 48px;
         }
     </style>
     <script>
@@ -612,79 +457,106 @@
                 });
             }
 
-            // Cookie Consent Management - GDPR/CCPA Compliant
-            const cookieBanner = document.getElementById('cookie-consent-banner');
-            const cookieAcceptBtn = document.getElementById('cookie-accept-btn');
-            const cookieRejectBtn = document.getElementById('cookie-reject-btn');
-            const cookieManageBtn = document.getElementById('cookie-manage-btn');
-            const cookiePreferencesTrigger = document.getElementById('cookie-preferences-trigger');
+            // Cookie Consent Management - Enhanced GDPR/CCPA Compliant System
+            const CONSENT_KEY = 'cookieConsent';
+            const POPUP_ID = 'cookie-consent-popup';
+            const PREFS_GEAR_ID = 'reopen-preferences';
+            const DELAY_MS = 1500;
 
-            // Check if user has already made a choice
-            const cookieConsent = localStorage.getItem('cookieConsent');
-            
-            // Show banner after 1.5 seconds if no choice has been made
-            if (!cookieConsent) {
-                setTimeout(() => {
-                    cookieBanner.classList.add('show');
-                }, 1500);
-            } else {
-                // Show the gear icon if user has made a choice
-                cookiePreferencesTrigger.classList.add('show');
+            const popup = document.getElementById(POPUP_ID);
+            const prefsGear = document.getElementById(PREFS_GEAR_ID);
+
+            function setConsent(choice) {
+                if (!choice) return;
+
+                // Store the choice
+                localStorage.setItem(CONSENT_KEY, choice);
+                console.log(`Cookie consent set to: ${choice}`);
+
+                // Conditional Script Loading
+                if (choice === 'accepted') {
+                    if (typeof initGoogleAnalytics === 'function') {
+                        initGoogleAnalytics();
+                    }
+                    console.log('✅ Google Analytics Loaded and Initialized.');
+                } else {
+                    console.log('❌ Tracking scripts blocked due to rejection/no consent.');
+                }
+
+                // Dismiss the popup and show the gear icon
+                hidePopup();
+                showGearIcon();
             }
 
-            // Function to hide banner with animation
-            function hideBanner() {
-                cookieBanner.classList.add('hide');
-                cookieBanner.classList.remove('show');
+            function hidePopup() {
+                popup.classList.add('is-dismissing');
                 setTimeout(() => {
-                    cookieBanner.style.display = 'none';
+                    popup.style.display = 'none';
+                    popup.classList.remove('is-visible', 'is-dismissing');
                 }, 500);
             }
+            
+            function showGearIcon() {
+                prefsGear.classList.remove('opacity-0', 'pointer-events-none');
+                prefsGear.classList.add('opacity-100', 'pointer-events-auto');
+            }
 
-            // Handle Accept All button
-            cookieAcceptBtn?.addEventListener('click', () => {
-                localStorage.setItem('cookieConsent', 'accepted');
-                hideBanner();
-                
-                // Initialize Google Analytics
-                if (typeof initGoogleAnalytics === 'function') {
-                    initGoogleAnalytics();
+            function showPopup() {
+                popup.style.display = 'block';
+                void popup.offsetWidth;
+                popup.classList.add('is-visible');
+            }
+
+            function checkConsent() {
+                const currentConsent = localStorage.getItem(CONSENT_KEY);
+
+                if (currentConsent) {
+                    console.log(`Existing consent found: ${currentConsent}`);
+                    if (currentConsent === 'accepted') {
+                        if (typeof initGoogleAnalytics === 'function') {
+                            initGoogleAnalytics();
+                        }
+                    }
+                    popup.style.display = 'none';
+                    showGearIcon();
+                } else {
+                    setTimeout(showPopup, DELAY_MS);
                 }
-                
-                // Show gear icon
-                cookiePreferencesTrigger.classList.add('show');
-                
-                console.log('✅ Cookies accepted. Analytics enabled.');
-            });
+            }
 
-            // Handle Reject button
-            cookieRejectBtn?.addEventListener('click', () => {
-                localStorage.setItem('cookieConsent', 'rejected');
-                hideBanner();
-                
-                // Show gear icon
-                cookiePreferencesTrigger.classList.add('show');
-                
-                console.log('❌ Cookies rejected. Analytics disabled.');
-            });
+            // Initialize Cookie Consent
+            function initConsentApp() {
+                // Button handlers
+                document.getElementById('accept-all-btn')?.addEventListener('click', () => {
+                    setConsent('accepted');
+                });
 
-            // Handle Manage Preferences button (reopens banner)
-            cookieManageBtn?.addEventListener('click', () => {
-                // This could open a more detailed preferences modal in the future
-                // For now, it just reopens the banner
-                alert(currentLang === 'ar' 
-                    ? 'يمكنك اختيار "قبول الكل" أو "رفض" لإدارة تفضيلاتك. سيتم إضافة خيارات تفصيلية قريباً.' 
-                    : 'You can choose "Accept All" or "Reject" to manage your preferences. Detailed options coming soon.');
-            });
+                document.getElementById('reject-btn')?.addEventListener('click', () => {
+                    setConsent('rejected');
+                });
 
-            // Handle gear icon click to reopen banner
-            cookiePreferencesTrigger?.addEventListener('click', () => {
-                cookieBanner.style.display = 'block';
-                setTimeout(() => {
-                    cookieBanner.classList.add('show');
-                    cookieBanner.classList.remove('hide');
-                }, 10);
-            });
+                document.getElementById('preferences-link')?.addEventListener('click', () => {
+                    console.log('Preference modal requested. Setting preferences_set consent.');
+                    alert(currentLang === 'ar' 
+                        ? 'يمكنك اختيار "قبول الكل" أو "رفض" لإدارة تفضيلاتك. سيتم إضافة خيارات تفصيلية قريباً.' 
+                        : 'You can choose "Accept All" or "Reject" to manage your preferences. Detailed options coming soon.');
+                    setConsent('preferences_set');
+                });
+
+                document.getElementById(PREFS_GEAR_ID)?.addEventListener('click', () => {
+                    localStorage.removeItem(CONSENT_KEY);
+                    console.log('Consent reset. Showing popup again...');
+                    prefsGear.classList.remove('opacity-100', 'pointer-events-auto');
+                    prefsGear.classList.add('opacity-0', 'pointer-events-none');
+                    showPopup();
+                });
+
+                // Check for existing consent
+                checkConsent();
+            }
+
+            // Initialize after DOM is ready
+            initConsentApp();
         });
     </script>
 </head>
@@ -1206,52 +1078,65 @@
         </svg>
     </a>
 
-    <!-- Cookie Consent Banner - Full Width Professional Design -->
-    <div id="cookie-consent-banner" class="cookie-consent-banner">
-        <div class="cookie-consent-container">
-            <div class="cookie-consent-content">
-                <div class="cookie-consent-text">
-                    <h3 class="cookie-consent-title" 
-                        data-en="We value your privacy and your experience 🍪" 
-                        data-ar="نحن نحترم خصوصيتك وتجربتك 🍪">
-                        We value your privacy and your experience 🍪
-                    </h3>
-                    <p class="cookie-consent-description" 
-                       data-en="At faizanbc.com, your privacy is our top priority. We use cookies and similar technologies to enhance your browsing experience, deliver personalized content, measure site performance, and analyze traffic patterns. You can choose which types of cookies to allow or decline. Your preferences will be respected and saved securely. By accepting, you help us provide a better, more tailored experience." 
-                       data-ar="في faizanbc.com، خصوصيتك هي أولويتنا القصوى. نستخدم ملفات تعريف الارتباط والتقنيات المشابهة لتحسين تجربة التصفح الخاصة بك، وتقديم محتوى مخصص، وقياس أداء الموقع، وتحليل أنماط حركة المرور. يمكنك اختيار أنواع الكوكيز التي تريد السماح بها أو رفضها. سيتم احترام تفضيلاتك وحفظها بأمان. من خلال القبول، تساعدنا على تقديم تجربة أفضل وأكثر تخصيصًا.">
-                        At faizanbc.com, your privacy is our top priority. We use cookies and similar technologies to enhance your browsing experience, deliver personalized content, measure site performance, and analyze traffic patterns. You can choose which types of cookies to allow or decline. Your preferences will be respected and saved securely. By accepting, you help us provide a better, more tailored experience.
-                    </p>
-                </div>
-                <div class="cookie-consent-actions">
-                    <div class="cookie-consent-buttons">
-                        <button id="cookie-accept-btn" class="cookie-btn cookie-btn-accept" 
-                                data-en="Accept All" 
-                                data-ar="قبول الكل">
-                            Accept All
-                        </button>
-                        <button id="cookie-reject-btn" class="cookie-btn cookie-btn-reject" 
-                                data-en="Reject" 
-                                data-ar="رفض">
-                            Reject
+    <!-- Cookie Consent Banner - Enhanced Tailwind Design -->
+    <div id="cookie-consent-popup" class="cookie-popup fixed bg-white shadow-2xl shadow-blue-500/20 border-t border-gray-100 p-6 md:p-8">
+        <div class="banner-content-wrapper">
+            <div class="banner-text-container">
+                <!-- Title -->
+                <h2 class="text-xl font-bold text-gray-900 mb-2 flex items-center"
+                    data-en="We value your privacy and your experience 🍪"
+                    data-ar="نحن نحترم خصوصيتك وتجربتك 🍪">
+                    We value your privacy and your experience <span class="ml-2 rtl:ml-0 rtl:mr-2">🍪</span>
+                </h2>
+                
+                <!-- Body Text -->
+                <p class="text-gray-600 text-sm leading-relaxed"
+                   data-en="At faizanbc.com, your privacy is our top priority. We use cookies and similar technologies to enhance your browsing experience, deliver personalized content, measure site performance, and analyze traffic patterns. You can choose which types of cookies to allow or decline. Your preferences will be respected and saved securely. By accepting, you help us provide a better, more tailored experience."
+                   data-ar="في faizanbc.com، خصوصيتك هي أولويتنا القصوى. نستخدم ملفات تعريف الارتباط والتقنيات المشابهة لتحسين تجربة التصفح الخاصة بك، وتقديم محتوى مخصص، وقياس أداء الموقع، وتحليل أنماط حركة المرور. يمكنك اختيار أنواع الكوكيز التي تريد السماح بها أو رفضها. سيتم احترام تفضيلاتك وحفظها بأمان. من خلال القبول، تساعدنا على تقديم تجربة أفضل وأكثر تخصيصًا.">
+                    At faizanbc.com, your privacy is our top priority. We use cookies and similar technologies to enhance your browsing experience, deliver personalized content, measure site performance, and analyze traffic patterns. You can choose which types of cookies to allow or decline. Your preferences will be respected and saved securely. By accepting, you help us provide a better, more tailored experience.
+                </p>
+            </div>
+
+            <div class="banner-button-container w-full lg:w-auto">
+                <div class="flex flex-col space-y-3">
+                    <!-- Accept All Button -->
+                    <button id="accept-all-btn" 
+                            class="w-full py-3 px-4 text-white font-semibold rounded-lg transition duration-200 ease-in-out bg-gradient-to-r from-blue-900 to-blue-500 hover:from-blue-800 hover:to-blue-400 shadow-md hover:shadow-lg"
+                            aria-label="Accept all cookies and tracking"
+                            data-en="Accept All"
+                            data-ar="قبول الكل">
+                        Accept All
+                    </button>
+
+                    <!-- Reject Button -->
+                    <button id="reject-btn" 
+                            class="w-full py-3 px-4 font-semibold rounded-lg border-2 border-gray-400 text-gray-700 hover:border-gray-500 transition duration-150 ease-in-out bg-white"
+                            aria-label="Reject all cookies and tracking"
+                            data-en="Reject"
+                            data-ar="رفض">
+                        Reject
+                    </button>
+                    
+                    <!-- Manage Preferences Link -->
+                    <div class="text-center pt-2">
+                        <button id="preferences-link" 
+                                class="text-sm font-medium text-gray-400 hover:text-gray-600 transition duration-150 ease-in-out"
+                                aria-label="Manage cookie preferences"
+                                data-en="Manage Preferences"
+                                data-ar="إدارة التفضيلات">
+                            Manage Preferences
                         </button>
                     </div>
-                    <button id="cookie-manage-btn" class="cookie-manage-link" 
-                            data-en="Manage Preferences" 
-                            data-ar="إدارة التفضيلات">
-                        Manage Preferences
-                    </button>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Cookie Preferences Trigger (Gear Icon) -->
-    <div id="cookie-preferences-trigger" class="cookie-preferences-trigger" title="Cookie Preferences">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="12" cy="12" r="3"></circle>
-            <path d="M12 1v6m0 6v6m9-9h-6m-6 0H3"></path>
-            <path d="M20.2 8.8l-4.2 4.2M7.8 7.8l-4.2-4.2m12.6 12.6l-4.2-4.2M7.8 16.2l-4.2 4.2"></path>
-        </svg>
-    </div>
+    <!-- Preferences Gear Icon -->
+    <button id="reopen-preferences" 
+            class="fixed bottom-4 right-4 rtl:right-auto rtl:left-4 p-3 bg-white shadow-lg rounded-full text-gray-700 border border-gray-100 hover:bg-gray-50 transition duration-300 z-[1001] opacity-0 pointer-events-none gear-icon-size"
+            aria-label="Reopen cookie preferences">
+        <i data-lucide="settings" class="w-full h-full"></i>
+    </button>
 </body>
 </html>
